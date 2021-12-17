@@ -3,8 +3,6 @@
 ## Requerimientos
 - Python 3
 - Flask
-- pandas
-- matplotlib
 
 ## Empezar a trabajar
 ```
