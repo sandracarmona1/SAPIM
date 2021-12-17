@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block main %}
+      <h1>Añadir trabajador</h1>
+      <p>Aqui se llenaran los datos del nuevo trabajador</p>
+      <form class="row g-3">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label for="inputName" class="form-label">Nombres</label>
+            <input type="text" class="form-control" id="inputName">
+          </div>
+          <div class="col-md-6">
+            <label for="inputLastName" class="form-label">Apellidos</label>
+            <input type="text" class="form-control" id="inputLastName">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label for="inputEmail4" class="form-label">Email</label>
+          <input type="email" class="form-control" id="inputEmail4">
+        </div>
+        <div class="col-md-6">
+          <label for="inputPassword4" class="form-label">Contraseña</label>
+          <input type="password" class="form-control" id="inputPassword4">
+        </div>
+        <div class="col-6">
+          <label for="inputAddress" class="form-label">Dirección</label>
+          <input type="text" class="form-control" id="inputAddress">
+        </div>
+        <div class="col-md-6">
+          <label for="inputCity" class="form-label">Distrito</label>
+          <input type="text" class="form-control" id="inputCity">
+        </div>
+        <div class="col-1">
+          <button type="submit" class="btn btn-primary">Agregar</button>
+        </div>
+        <div class="col-2">
+          <button type="submit" class="btn btn-success"><a class="btn btn-success" href="agregar-trabajador.html">Seguir agregando</a></button>
+        </div>
+      </form>
+{% endblock %}

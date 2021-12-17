@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block main %}
+      <h1>Administración de los pedidos</h1>
+      <p>Aqui se pueden visualizar los pedidos</p>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Pedidos</th>
+            <th scope="col">Tela</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Cantidad</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Sillas</td>
+            <td>Azul</td>
+            <td>28/12/2021</td>
+            <td>Terminada</td>
+            <td>6</td>
+            <td><button type="button" class="btn btn-secondary">Detalles</button></td>
+          </tr>
+        </tbody>
+      </table>
+{% endblock %}

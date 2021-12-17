@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block main %}
+      <h1>Datos de los vendedores</h1>
+      <p>Aqui se pueden visualizar los datos de los vendedores</p>
+      <button type="button" class="btn btn-success"><a class="btn btn-success" href="agregar-trabajador.html">Agregar trabajador</a></button>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Nombres</th>
+            <th scope="col">Apellidos</th>
+            <th scope="col">Puesto</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Pablo Enrique</td>
+            <td>Atarama Irribarren</td>
+            <td>Sistemas</td>
+          </tr>
+          <tr>
+            <td>Sandra Marina</td>
+            <td>Carmona Flores</td>
+            <td>Sistemas</td>
+          </tr>
+        </tbody>
+      </table>
+{% endblock %}
