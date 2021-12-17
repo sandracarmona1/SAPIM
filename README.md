@@ -10,3 +10,9 @@ venv\Scripts\activate
 set FLASK_ENV=development
 flask run --host=0.0.0.0
 ```
+
+## Páginas de guía
+
+Flask [https://flask.palletsprojects.com/](https://flask.palletsprojects.com/)
+
+Jinja Templates [https://jinja.palletsprojects.com/](https://jinja.palletsprojects.com/)
