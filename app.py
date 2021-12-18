@@ -7,7 +7,7 @@ app.secret_key = "asdasd"
 @app.route("/")
 def index():
     if 'usuario' in session:
-        return render_template("index.html", usuario = session["usuario"])
+        return render_template("administrador/index.html", usuario = session["usuario"])
     else:
         return redirect(url_for('acceso'))
 
@@ -17,23 +17,23 @@ def acceso():
 
 @app.route("/administracion-pedidos")
 def adm_pedidos():
-    return render_template("administracion-pedidos.html")
+    return render_template("administrador/administracion-pedidos.html")
 
 @app.route("/cronograma-produccion")
 def cro_produccion():
-    return render_template("cronograma-produccion.html")
+    return render_template("administrador/cronograma-produccion.html")
 
 @app.route("/datos-vendedores")
 def dat_vendedores():
-    return render_template("datos-vendedores.html")
+    return render_template("administrador/datos-vendedores.html")
 
 @app.route("/informe-demandas")
 def inf_demanda():
-    return render_template("informe-demandas.html")
+    return render_template("administrador/informe-demandas.html")
 
 @app.route("/agregar-trabajador")
 def agr_trabajador():
-    return render_template("agregar-trabajador.html")
+    return render_template("administrador/agregar-trabajador.html")
 
 # SESIONES DE USUARIO
  
