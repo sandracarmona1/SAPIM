@@ -76,18 +76,6 @@ class EOQA:
         
         return opt
 
-
-
-
-
-
-
-
-
-
-
-
-
     # def graficar(self)
     #     i = 0
     #     while i<n:
