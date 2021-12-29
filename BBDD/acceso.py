@@ -1,12 +1,12 @@
 import mysql.connector
 
-from secreto import *
+from BBDD.secreto import *
 
 class Acceso():
     def __init__(self):
         self.mydb = mysql.connector.connect(host=host, user=user, password=password, database=database)
-    
-    def comprobarIngreso(self,usuario,contraseña):
+
+    def comprobarAcceso(self,usuario,contraseña):
         mycursor = self.mydb.cursor()
         sql = "SELECT id_ven FROM vendedor WHERE usuario_ven=%s AND contraseña_ven=%s"
         val = (usuario,contraseña)
@@ -18,6 +18,5 @@ class Acceso():
         else:
             acceso=False
             id = None
-    
-        return {"acceso":acceso, "id":id}
 
+        return {"acceso":acceso, "id":id}

@@ -15,4 +15,4 @@ flask run --host=0.0.0.0
 
 Flask [https://flask.palletsprojects.com/](https://flask.palletsprojects.com/)
 
-Jinja Templates [https://jinja.palletsprojects.com/](https://jinja.palletsprojects.com/)
+Jinja Templates [https://jinja.palletsprojects.com/en/3.0.x/templates/](https://jinja.palletsprojects.com/en/3.0.x/templates/)

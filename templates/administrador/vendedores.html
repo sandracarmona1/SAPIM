@@ -1,0 +1,24 @@
+{% extends "administrador/base.html" %}
+{% block main %}
+<h1>Datos de los vendedores</h1>
+<p>Aqui se pueden visualizar los datos de los vendedores</p>
+<a class="btn btn-success" href="/agregar-trabajador/">Agregar trabajador</a>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Nombres</th>
+      <th scope="col">Apellidos</th>
+      <th scope="col">Datos</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for vendedor in vendedores %}
+    <tr>
+      <td>{{vendedor[0]}}</td>
+      <td>{{vendedor[1]}}</td>
+      <td><a href="datos-vendedores/{{vendedor[2]}}"><button type="button" class="btn btn-primary">Datos del vendedor</button></a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
