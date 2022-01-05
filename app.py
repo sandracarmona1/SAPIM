@@ -1,6 +1,8 @@
 from flask import Flask, session, request, url_for, render_template, redirect
 from BBDD.acceso import Acceso
 from BBDD.vendedores import Vendedores
+from BBDD.pedidos import Pedidos
+import json
 
 app = Flask(__name__)
 
@@ -9,7 +11,15 @@ app.secret_key = "asdasd"
 @app.route("/")
 def index():
     if 'id' in session:
-        return render_template("administrador/index.html", usuario = session["id"])
+        if session["tipo"] == "Administrador":
+            return render_template("administrador/index.html", usuario = session["id"])
+
+        elif session["tipo"] == "Vendedor":
+            return render_template("vendedor/index.html", usuario = session["id"])
+
+        elif session["tipo"] == "Trabajador":
+            return render_template("trabajador/index.html", usuario = session["id"])
+
     else:
         return redirect(url_for('acceso'))
 
@@ -86,7 +96,38 @@ def agregar_otro_trabajador():
         )
     return redirect(url_for('agr_trabajador'))
 
-# SESIONES DE USUARIO
+# P E D I D O S
+
+# from controladores.pedidos import *
+
+@app.route("/hacer-pedido")
+def hacerPedidoVista():
+    pedido = Pedidos()
+    tiposDeProductos = pedido.tiposDeProductos()
+    tiposDeTelas = pedido.tiposDeTelas()
+    return render_template("vendedor/hacer-pedido.html", tiposDeProductos = tiposDeProductos, tiposDeTelas = tiposDeTelas)
+
+@app.route("/hallar-colores/", methods=['POST', 'GET'])
+def hallarColores():
+    if request.method == 'POST':
+        pedidoColores = Pedidos()
+        colores = pedidoColores.coloresDeTela(request.form['idTipoDeTela'])
+        return json.dumps(colores)
+
+@app.route("/realizar-pedido/", methods=['POST', 'GET'])
+def realizarPedido():
+    if request.method == 'POST':
+        nuevoPedido = Pedidos()
+        nuevoPedido.pedir(session["id"],
+            request.form['idTipoDeProducto'],
+            request.form['idTipoDeTela'],
+            request.form['idColorDeTela'],
+            request.form['cantidad'],
+            request.form['fecha'],
+            "0")
+    return redirect(url_for('index'))
+
+# S E S I O N E S   D E   U S U A R I O
 
 @app.route("/dar-acceso", methods=['POST', 'GET'])
 def darAcceso():
@@ -99,8 +140,10 @@ def darAcceso():
         )
         if respuesta["acceso"]:
             session["id"] = respuesta["id"]
+            session["tipo"] = respuesta["tipo"]
 
-        return redirect(url_for('index'))
+    return redirect(url_for('index'))
+
 
 
 @app.route("/quitar-acceso")

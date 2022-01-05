@@ -1,0 +1,69 @@
+{% extends "vendedor/base.html" %}
+{% block main %}
+<h1>Hacer pedido</h1>
+<p>Realizar un nuevo pedido</p>
+<form action="realizar-pedido/" method="post" class="row g-3">
+
+  <div class="col-md-4">
+    <label for="tipoDeProducto" class="form-label">Tipo de producto</label>
+    <select class="form-select" name="idTipoDeProducto" id="tipoDeProducto" aria-label="Default select example">
+      {% for tipo in tiposDeProductos %}
+      <option value="{{tipo[0]}}">{{tipo[1]}}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-md-4">
+    <label for="cant" class="form-label">Cantidad</label>
+    <input type="number" step="1" value="1" name="cantidad" class="form-control" id="cant">
+  </div>
+  <div class="col-md-4">
+    <label for="fecha" class="form-label">Fecha</label>
+    <input type="date" class="form-control" name="fecha" id="fecha" required>
+  </div>
+  <div class="col-md-6">
+    <label for="tipoDeTela" class="form-label">Tipo de tela</label>
+    <select class="form-select" name="idTipoDeTela" id="selectTipoDeTela" id="tipoDeTela" aria-label="Default select example">
+      {% for tipo in tiposDeTelas %}
+      <option value="{{tipo[0]}}">{{tipo[1]}}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-md-6">
+    <label for="selectColores" name="colorDeTela" class="form-label">Color de tela</label>
+    <select class="form-select" name="idColorDeTela" id="selectColores" aria-label="Default select example"></select>
+  </div>
+  <div class="mb-3">
+    <label for="detalles" class="form-label">Detalles</label>
+    <textarea class="form-control" id="detalles" style="height: 100px"></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">Pedir</button>
+</form>
+<script type="text/javascript">
+  var cajadatos;
+  function iniciar() {
+      selectColores = document.getElementById("selectColores");
+      var selectTipoDeTela = document.getElementById("selectTipoDeTela");
+      selectTipoDeTela.addEventListener("change", hallarColores);
+      hallarColores()
+  }
+  function hallarColores() {
+      var datos = new FormData();
+      datos.append("idTipoDeTela", document.getElementById("selectTipoDeTela").value);
+      var url = "hallar-colores/";
+      var solicitud = new XMLHttpRequest();
+      solicitud.addEventListener("load", function (evento) {
+          var datos = evento.target;
+          if (datos.status == 200) {
+            colores = JSON.parse(datos.responseText);
+            selectColores.innerHTML = "";
+            for (var i = 0; i < colores.length; i++) {
+              selectColores.innerHTML = selectColores.innerHTML + "<option value='"+colores[i][0]+"'>"+colores[i][1]+"</option>";
+            }
+          }
+      });
+      solicitud.open("POST", url, true);
+      solicitud.send(datos);
+  }
+  window.addEventListener("load", iniciar);
+</script>
+{% endblock %}
