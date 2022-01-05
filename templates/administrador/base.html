@@ -23,16 +23,16 @@
                 <a class="nav-link" href="/vendedores">Datos de los vendedores</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/administracion-pedidos">Administración de los pedidos</a>
+                <a class="nav-link" href="{{url_for('pedidosParaProduccion')}}">Administración de los pedidos</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/informe-demandas">Informe de demandas</a>
+                <a class="nav-link" href="{{url_for('informeDeDemandas')}}">Informe de demandas</a>
               </li>
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a class="nav-link" href="/cronograma-produccion">Cronograma de producción</a>
-              </li>
+              </li> -->
               <li class="nav-item">
-                <a class="nav-link" href="/quitar-acceso">Cerrar sesión</a>
+                <a class="nav-link" href="{{url_for('quitarAcceso')}}">Cerrar sesión</a>
               </li>
             </ul>
             <!-- <div class="nav-item d-flex">

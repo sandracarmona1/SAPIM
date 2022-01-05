@@ -14,8 +14,8 @@ class Vendedores():
     def nuevoTrabajador(self,nombre,apellido,numero,usuario,contraseña,direccion):
         mycursor = self.mydb.cursor()
 
-        sql = "INSERT INTO `fwweimib_sapim`.`vendedor` (`nombre_ven`, `apellido_ven`, `numero_ven`, `usuario_ven`, `contraseña_ven`, `direccion_ven`) VALUES (%s, %s, %s, %s, %s, %s)"
-        val = (nombre, apellido, numero,usuario,contraseña,direccion)
+        sql = "INSERT INTO `fwweimib_sapim`.`vendedor` (`nombre_ven`, `apellido_ven`, `numero_ven`, `usuario_ven`, `contraseña_ven`, `direccion_ven`, `tipo_ven`) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+        val = (nombre, apellido, numero,usuario,contraseña,direccion,"Vendedor")
         mycursor.execute(sql, val)
         self.mydb.commit()
 

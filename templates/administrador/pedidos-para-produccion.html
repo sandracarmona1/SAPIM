@@ -1,0 +1,32 @@
+{% extends "administrador/base.html" %}
+{% block main %}
+<h1>Pedidos para producción</h1>
+<p>Aquí se encontrarán todos los pedidos realizados por el vendedor</p>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Tipo de silla</th>
+      <th scope="col">Tipo de tela</th>
+      <th scope="col">Color de tela</th>
+      <th scope="col">Fecha</th>
+      <th scope="col">Estado</th>
+      <th scope="col">Detalles</th>
+    </tr>
+  </thead>
+  <tbody>
+{% for pedido in historial %}
+<tr>
+      <td>{{pedido[1]}}</td>
+      <td>{{pedido[2]}}</td>
+      <td>{{pedido[3]}}</td>
+      <td>{{pedido[5]}}</td>
+      <td>{{pedido[6]}}</td>
+      <td><form action="{{url_for('cancelarPedido')}}" method="post">
+        <input type="hidden" name="id_pedido" value="{{pedido[0]}}">
+        <button type="submit" class="btn btn-primary" name="button">Detalles</button>
+      </form></td>
+    </tr>
+{% endfor %}
+</tbody>
+</table>
+{% endblock %}

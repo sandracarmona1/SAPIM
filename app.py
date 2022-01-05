@@ -69,7 +69,7 @@ def agregar_trabajador():
 
 
 @app.route("/informe-demandas")
-def inf_demanda():
+def informeDeDemandas():
     return render_template("administrador/informe-demandas.html")
 
 @app.route("/agregar-trabajador")
@@ -125,7 +125,28 @@ def realizarPedido():
             request.form['cantidad'],
             request.form['fecha'],
             "0")
-    return redirect(url_for('index'))
+    return redirect(url_for('historialPedidos'))
+
+@app.route("/historial-de-pedidos/")
+def historialPedidos():
+    id_ven = session["id"]
+    pedidos = Pedidos()
+    historial = pedidos.historial(id_ven)
+    return render_template("vendedor/historial-de-pedidos.html", historial=historial)
+
+@app.route("/cancelar-pedido/", methods=['POST', 'GET'])
+def cancelarPedido():
+    if request.method == 'POST':
+        cancelacion = Pedidos()
+        cancelacion.cancelar(request.form['id_pedido'])
+        return redirect(url_for('historialPedidos'))
+
+@app.route("/pedidos-para-peudccion/")
+def pedidosParaProduccion():
+    pedidos = Pedidos()
+    historial = pedidos.pedidosProd()
+    return render_template("administrador/pedidos-para-produccion.html", historial=historial)
+
 
 # S E S I O N E S   D E   U S U A R I O
 
