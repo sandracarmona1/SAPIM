@@ -2,5 +2,69 @@
 {% block main %}
 <h1>Informe de demandas</h1>
 <p>Aqui se pueden visualizar el informe de la demanda</p>
+<form class="row g-3 mb-3" action="{{url_for('informeDeDemandas')}}" method="post">
+  <div class="col-md-4">
+    <label for="desde" class="form-label">Desde</label>
+    <input type="date" name="desde" class="form-control" id="desde" value="{{desde}}">
+  </div>
+  <div class="col-md-4">
+    <label for="hasta" class="form-label">Hasta</label>
+    <input type="date" name="hasta" class="form-control" id="hasta" value="{{hasta}}">
+  </div>
+  <div class="col-md-4">
+    <label for="" class="form-label">ㅤ</label>
+    <button type="submit" class="w-100 btn btn-primary">Mostrar</button>
+  </div>
+</form>
+<canvas class="mb-3" id="canvas"></canvas>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Fecha</th>
+      <th scope="col">Cantidad de sillas</th>
+      <th scope="col">Pronóstico</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for dia in resultado %}
+    <tr>
+      <td>{{dia[0]}}</td>
+      <td>{{dia[1]}}</td>
+      <td>{{dia[2]}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js" integrity="sha512-TW5s0IT/IppJtu76UbysrBH9Hy/5X41OTAbQuffZFU6lQ1rdcLHzpU5BzVvr/YFykoiMYZVWlr/PX1mDcfM9Qg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script type="text/javascript">
+  const ctx = document.getElementById('canvas').getContext('2d');
+  const myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: {{fechas|safe}},
+        datasets: [{
+            label: "Cantidad de sillas",
+            data: {{yt}},
+            borderColor: [
+                'rgba(255, 99, 132, 1)'
+            ],
+        },
+        {
+            label: "Pronóstico de sillas",
+            data: {{Ft}},
+            borderColor: [
+                'rgba(54, 162, 235, 1)'
+            ],
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+</script>
 {% endblock %}

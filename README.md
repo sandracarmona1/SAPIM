@@ -3,6 +3,10 @@
 ## Requerimientos
 - Python 3
 - Flask
+- mysql-connector-python
+- pandas
+- matplotlib
+- numpy
 
 ## Empezar a trabajar
 ```

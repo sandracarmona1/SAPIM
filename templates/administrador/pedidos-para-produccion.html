@@ -21,7 +21,7 @@
       <td>{{pedido[3]}}</td>
       <td>{{pedido[5]}}</td>
       <td>{{pedido[6]}}</td>
-      <td><form action="{{url_for('cancelarPedido')}}" method="post">
+      <td><form>
         <input type="hidden" name="id_pedido" value="{{pedido[0]}}">
         <button type="submit" class="btn btn-primary" name="button">Detalles</button>
       </form></td>

@@ -2,7 +2,9 @@ from flask import Flask, session, request, url_for, render_template, redirect
 from BBDD.acceso import Acceso
 from BBDD.vendedores import Vendedores
 from BBDD.pedidos import Pedidos
+from Pronosticos.pronosticar import *
 import json
+import pandas
 
 app = Flask(__name__)
 
@@ -68,9 +70,27 @@ def agregar_trabajador():
     return redirect(url_for('lista_vendedores'))
 
 
-@app.route("/informe-demandas")
+@app.route("/informe-demandas", methods=['POST', 'GET'])
 def informeDeDemandas():
-    return render_template("administrador/informe-demandas.html")
+    resultado = []
+    desde = "2022/01/01"
+    hasta = "2022/01/10"
+    if request.method == 'POST':
+        desde = request.form['desde']
+        hasta = request.form['hasta']
+
+    pronostico = Pronosticar()
+    resultado = pronostico.hallarPronostico(desde, hasta)
+        # print(resultado)
+
+    return render_template("administrador/informe-demandas.html",
+        resultado=resultado["resultado"],
+        desde=desde,
+        hasta=hasta,
+        fechas=json.dumps(resultado["fechas"]),
+        yt=resultado["yt"],
+        Ft=resultado["Ft"],
+        )
 
 @app.route("/agregar-trabajador")
 def agr_trabajador():

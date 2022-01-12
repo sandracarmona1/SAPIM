@@ -46,6 +46,8 @@ class Pedidos():
 
     def pedidosProd(self):
         mycursor =self.mydb.cursor()
-        mycursor.execute("SELECT id_pedido, (SELECT nombre_silla FROM tipo_silla WHERE id_silla=pedido.id_silla), (SELECT nombre_tela FROM tipo_tela WHERE id_tela=pedido.id_tela), (SELECT nombre_color FROM tela_color WHERE id_color=pedido.id_color), detalle_ped, fecha_ped, estado_proc FROM pedido WHERE confirmacion_ped='1'")
+        # mycursor.execute("SELECT id_pedido, (SELECT nombre_silla FROM tipo_silla WHERE id_silla=pedido.id_silla), (SELECT nombre_tela FROM tipo_tela WHERE id_tela=pedido.id_tela), (SELECT nombre_color FROM tela_color WHERE id_color=pedido.id_color), detalle_ped, fecha_ped, estado_proc FROM pedido WHERE confirmacion_ped='1'")
+        mycursor.execute("SELECT id_pedido, (SELECT nombre_silla FROM tipo_silla WHERE id_silla=pedido.id_silla), (SELECT nombre_tela FROM tipo_tela WHERE id_tela=pedido.id_tela), (SELECT nombre_color FROM tela_color WHERE id_color=pedido.id_color), detalle_ped, fecha_ped, estado_proc FROM pedido")
+
         myresult = mycursor.fetchall()
         return myresult

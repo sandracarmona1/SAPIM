@@ -7,7 +7,7 @@ class Vendedores():
         self.mydb = mysql.connector.connect(host=host, user=user, password=password, database=database)
     def getVendedores(self):
         mycursor =self.mydb.cursor()
-        mycursor.execute("SELECT nombre_ven, apellido_ven, id_ven FROM vendedor")
+        mycursor.execute("SELECT nombre_ven, apellido_ven, id_ven FROM vendedor WHERE tipo_ven='Vendedor'")
         myresult = mycursor.fetchall()
         return myresult
 

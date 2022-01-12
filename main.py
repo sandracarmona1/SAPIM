@@ -33,7 +33,4 @@
 from Pronosticos.pronosticar import *
 
 pronostico = Pronosticar()
-
-
-
-
+pronostico.hallarPronostico("2022-01-07","2022-01-11")
