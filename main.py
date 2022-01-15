@@ -30,7 +30,10 @@
 
 # planificacion.inventario_final
 
-from Pronosticos.pronosticar import *
+# from Pronosticos.pronosticar import *
 
-pronostico = Pronosticar()
-pronostico.hallarPronostico("2022-01-07","2022-01-11")
+# pronostico = Pronosticar()
+# pronostico.hallarPronostico("2022-01-07","2022-01-11")
+
+from PMP.ejecutarPMP import *
+
