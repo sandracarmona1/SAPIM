@@ -8,10 +8,17 @@
 - matplotlib
 - numpy
 
-## Empezar a trabajar
+## Empezar a trabajar Windows (Sandra)
 ```
 venv\Scripts\activate
 set FLASK_ENV=development
+flask run --host=0.0.0.0
+```
+
+## Empezar a trabajar macOS (Pablo)
+```
+. venv/bin/activate
+export FLASK_ENV=development
 flask run --host=0.0.0.0
 ```
 
