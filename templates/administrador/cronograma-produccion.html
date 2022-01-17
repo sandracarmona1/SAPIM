@@ -1,5 +1,34 @@
-{% extends "base.html" %}
+{% extends "administrador/base.html" %}
+{% block estilos %}{% endblock %}
 {% block main %}
-      <h1>Cronograma de producción</h1>
-      <p>Aqui se puede visualizar el cronograma de producción</p>
+  <h1>Cronograma de producción</h1>
+  <p>Aqui se puede visualizar el cronograma de producción</p>
+  {{ cronograma|safe }}
+  <script type="text/javascript">
+    function iniciar() {
+      semanas = document.getElementsByTagName("tr");
+      for (var i = 0; i < semanas.length; i++) {
+        semanas[i].addEventListener("click",mostrar(i))
+      }
+    }
+    function mostrar(semana) {
+      var datos = new FormData();
+      datos.append("semana", semana);
+      var url = "produccion-de-semana/";
+      var solicitud = new XMLHttpRequest();
+      solicitud.addEventListener("load", function (evento) {
+          var datos = evento.target;
+          if (datos.status == 200) {
+            colores = JSON.parse(datos.responseText);
+            selectColores.innerHTML = "";
+            for (var i = 0; i < colores.length; i++) {
+              selectColores.innerHTML = selectColores.innerHTML + "<option value='"+colores[i][0]+"'>"+colores[i][1]+"</option>";
+            }
+          }
+      });
+      solicitud.open("POST", url, true);
+      solicitud.send(datos);
+    }
+    window.addEventListener("load", iniciar)
+  </script>
 {% endblock %}

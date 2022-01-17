@@ -14,18 +14,25 @@ class Pronosticar():
         index = pd.date_range(start = inicio, end = fin, freq = "D")
         mms["fecha_ped"] = index
         mms = mms.fillna(0)
+
+        mms["Ft"] = mms["Ft"].apply(round)
+
         resultado = []
         t = 1
-        while t < len(mms):
+        while t <= len(mms) :
             resultado.append(
-                (mms["fecha_ped"][t].strftime("%d/%m/%Y"), mms["yt"][t], mms["Ft"][t])
+                (
+                    mms["fecha_ped"][t].strftime("%d/%m/%Y"),
+                    mms["yt"][t],
+                    mms["Ft"][t]
+                )
              )
             t = t + 1
 
 
         fechas = []
         t = 1
-        while t < len(mms):
+        while t <= len(mms) :
             fechas.append(
                 str(mms["fecha_ped"][t].strftime("%d/%m/%Y"))
              )
@@ -39,4 +46,4 @@ class Pronosticar():
         return {"resultado": resultado,
             "fechas": fechas,
             "yt": mms["yt"].to_list(),
-            "Ft": mms["Ft"].to_list(),}
+            "Ft": mms["Ft"].to_list()}

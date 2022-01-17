@@ -5,6 +5,8 @@ from BBDD.pedidos import Pedidos
 from Pronosticos.pronosticar import *
 import json
 import pandas
+import calendar
+import datetime
 
 app = Flask(__name__)
 
@@ -35,7 +37,26 @@ def adm_pedidos():
 
 @app.route("/cronograma-produccion")
 def cro_produccion():
-    return render_template("administrador/cronograma-produccion.html")
+    # calendario = calendar.Calendar(firstweeekday=6)
+
+    mes_actual = int(datetime.datetime.today().strftime("%m"))
+    anio_actual = int(datetime.datetime.today().strftime("%Y"))
+
+    calendario = calendar.HTMLCalendar(firstweekday=6)
+    calendario.cssclass_month = "month table table-hover table-bordered text-center align-middle"
+    calendario.cssclasses = ["mon", "tue", "wed", "thu", "fri", "sat table-active p-3", "sun table-active p-3"]
+    cronograma = calendario.formatmonth(anio_actual, mes_actual)
+    return render_template("administrador/cronograma-produccion.html", cronograma = cronograma)
+
+@app.route("/produccion-semana", methods=['POST', 'GET'])
+def produccionSemana():
+    if request.method == 'POST':
+        request.form['semana']
+
+
+
+
+
 
 # V E N D E D O R E S
 

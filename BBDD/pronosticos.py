@@ -11,10 +11,17 @@ class Pronostico():
         self.mydb = mysql.connector.connect(host=host, user=user, password=password, database=database)
 
     def datosPedidos(self, desde, hasta):
+
+        # hasta = datetime.datetime.strptime(hasta, "%Y-%m-%d")
+        # print(hasta)
+        # hasta = hasta + datetime.timedelta(days=-1)
+        # print(hasta)
+
         mycursor =self.mydb.cursor()
         sql = "SELECT fecha_ped, SUM(cantidad_ped) FROM pedido WHERE fecha_ped BETWEEN %s AND %s GROUP BY fecha_ped"
         mycursor.execute(sql,(desde, hasta))
         myresult = mycursor.fetchall()
+        
         df = pd.DataFrame(myresult, columns=["fecha_ped","cantidad_ped"])
         df["fecha_ped"] = pd.to_datetime(df["fecha_ped"])
         df.set_index("fecha_ped", inplace=True)
