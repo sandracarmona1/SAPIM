@@ -3,6 +3,7 @@ from BBDD.acceso import Acceso
 from BBDD.vendedores import Vendedores
 from BBDD.pedidos import Pedidos
 from Pronosticos.pronosticar import *
+from PMP.ejecutarPMP import *
 import json
 import pandas
 import calendar
@@ -12,28 +13,32 @@ app = Flask(__name__)
 
 app.secret_key = "asdasd"
 
+
 @app.route("/")
 def index():
     if 'id' in session:
         if session["tipo"] == "Administrador":
-            return render_template("administrador/index.html", usuario = session["id"])
+            return render_template("administrador/index.html", usuario=session["id"])
 
         elif session["tipo"] == "Vendedor":
-            return render_template("vendedor/index.html", usuario = session["id"])
+            return render_template("vendedor/index.html", usuario=session["id"])
 
         elif session["tipo"] == "Trabajador":
-            return render_template("trabajador/index.html", usuario = session["id"])
+            return render_template("trabajador/index.html", usuario=session["id"])
 
     else:
         return redirect(url_for('acceso'))
+
 
 @app.route("/acceso")
 def acceso():
     return render_template("acceso.html")
 
+
 @app.route("/administracion-pedidos")
 def adm_pedidos():
     return render_template("administrador/administracion-pedidos.html")
+
 
 @app.route("/cronograma-produccion")
 def cro_produccion():
@@ -44,18 +49,20 @@ def cro_produccion():
 
     calendario = calendar.HTMLCalendar(firstweekday=6)
     calendario.cssclass_month = "month table table-hover table-bordered text-center align-middle"
-    calendario.cssclasses = ["mon", "tue", "wed", "thu", "fri", "sat table-active p-3", "sun table-active p-3"]
+    calendario.cssclasses = ["mon", "tue", "wed", "thu",
+                             "fri", "sat table-active p-3", "sun table-active p-3"]
     cronograma = calendario.formatmonth(anio_actual, mes_actual)
-    return render_template("administrador/cronograma-produccion.html", cronograma = cronograma)
+
+    plan = ejecutarPMP()
+    semanas = plan.calcular()
+
+    return render_template("administrador/cronograma-produccion.html", cronograma=cronograma, semanas=semanas)
+
 
 @app.route("/produccion-semana", methods=['POST', 'GET'])
 def produccionSemana():
     if request.method == 'POST':
         request.form['semana']
-
-
-
-
 
 
 # V E N D E D O R E S
@@ -64,17 +71,20 @@ def produccionSemana():
 def lista_vendedores():
     vendedores = Vendedores()
 
-    return render_template("administrador/vendedores.html", vendedores = vendedores.getVendedores())
+    return render_template("administrador/vendedores.html", vendedores=vendedores.getVendedores())
+
 
 @app.route("/datos-vendedores/<id>")
 def datos_vendedor(id):
     vendedor = Vendedores()
 
-    return render_template("administrador/datos-vendedores.html", vendedor = vendedor.getVendedor(id)[0])
+    return render_template("administrador/datos-vendedores.html", vendedor=vendedor.getVendedor(id)[0])
+
 
 @app.route("/agregar-trabajador/")
 def nuevo_trabajador():
     return render_template("administrador/agregar-trabajador.html")
+
 
 @app.route("/agregar-trabajador/", methods=['POST', 'GET'])
 def agregar_trabajador():
@@ -102,26 +112,29 @@ def informeDeDemandas():
 
     pronostico = Pronosticar()
     resultado = pronostico.hallarPronostico(desde, hasta)
-        # print(resultado)
+    # print(resultado)
 
     return render_template("administrador/informe-demandas.html",
-        resultado=resultado["resultado"],
-        desde=desde,
-        hasta=hasta,
-        fechas=json.dumps(resultado["fechas"]),
-        yt=resultado["yt"],
-        Ft=resultado["Ft"],
-        )
+                           resultado=resultado["resultado"],
+                           desde=desde,
+                           hasta=hasta,
+                           fechas=json.dumps(resultado["fechas"]),
+                           yt=resultado["yt"],
+                           Ft=resultado["Ft"],
+                           )
+
 
 @app.route("/agregar-trabajador")
 def agr_trabajador():
     return render_template("administrador/agregar-trabajador.html")
+
 
 @app.route("/eliminar-trabajador/<id>")
 def eliminar_trabajador(id):
     eliminacion = Vendedores()
     eliminacion.eliminarTrabajador(id)
     return redirect(url_for('lista_vendedores'))
+
 
 @app.route("/agregar-otro-trabajador/", methods=['POST', 'GET'])
 def agregar_otro_trabajador():
@@ -141,12 +154,14 @@ def agregar_otro_trabajador():
 
 # from controladores.pedidos import *
 
+
 @app.route("/hacer-pedido")
 def hacerPedidoVista():
     pedido = Pedidos()
     tiposDeProductos = pedido.tiposDeProductos()
     tiposDeTelas = pedido.tiposDeTelas()
-    return render_template("vendedor/hacer-pedido.html", tiposDeProductos = tiposDeProductos, tiposDeTelas = tiposDeTelas)
+    return render_template("vendedor/hacer-pedido.html", tiposDeProductos=tiposDeProductos, tiposDeTelas=tiposDeTelas)
+
 
 @app.route("/hallar-colores/", methods=['POST', 'GET'])
 def hallarColores():
@@ -155,18 +170,20 @@ def hallarColores():
         colores = pedidoColores.coloresDeTela(request.form['idTipoDeTela'])
         return json.dumps(colores)
 
+
 @app.route("/realizar-pedido/", methods=['POST', 'GET'])
 def realizarPedido():
     if request.method == 'POST':
         nuevoPedido = Pedidos()
         nuevoPedido.pedir(session["id"],
-            request.form['idTipoDeProducto'],
-            request.form['idTipoDeTela'],
-            request.form['idColorDeTela'],
-            request.form['cantidad'],
-            request.form['fecha'],
-            "0")
+                          request.form['idTipoDeProducto'],
+                          request.form['idTipoDeTela'],
+                          request.form['idColorDeTela'],
+                          request.form['cantidad'],
+                          request.form['fecha'],
+                          "0")
     return redirect(url_for('historialPedidos'))
+
 
 @app.route("/historial-de-pedidos/")
 def historialPedidos():
@@ -175,12 +192,14 @@ def historialPedidos():
     historial = pedidos.historial(id_ven)
     return render_template("vendedor/historial-de-pedidos.html", historial=historial)
 
+
 @app.route("/cancelar-pedido/", methods=['POST', 'GET'])
 def cancelarPedido():
     if request.method == 'POST':
         cancelacion = Pedidos()
         cancelacion.cancelar(request.form['id_pedido'])
         return redirect(url_for('historialPedidos'))
+
 
 @app.route("/pedidos-para-peudccion/")
 def pedidosParaProduccion():
@@ -205,7 +224,6 @@ def darAcceso():
             session["tipo"] = respuesta["tipo"]
 
     return redirect(url_for('index'))
-
 
 
 @app.route("/quitar-acceso")

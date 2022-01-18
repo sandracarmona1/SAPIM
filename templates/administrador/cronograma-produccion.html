@@ -4,31 +4,34 @@
   <h1>Cronograma de producción</h1>
   <p>Aqui se puede visualizar el cronograma de producción</p>
   {{ cronograma|safe }}
+  <div class="accordion" id="acordion">
+    {% for semana in semanas %}
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingOne">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Accordion Item #1
+        </button>
+      </h2>
+      <div class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+          {% for clave, dia in semana.items %}
+            <h3>{{clave}}</h3>
+            <p>{{dia[0]}}</p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
   <script type="text/javascript">
-    function iniciar() {
-      semanas = document.getElementsByTagName("tr");
-      for (var i = 0; i < semanas.length; i++) {
-        semanas[i].addEventListener("click",mostrar(i))
-      }
-    }
-    function mostrar(semana) {
-      var datos = new FormData();
-      datos.append("semana", semana);
-      var url = "produccion-de-semana/";
-      var solicitud = new XMLHttpRequest();
-      solicitud.addEventListener("load", function (evento) {
-          var datos = evento.target;
-          if (datos.status == 200) {
-            colores = JSON.parse(datos.responseText);
-            selectColores.innerHTML = "";
-            for (var i = 0; i < colores.length; i++) {
-              selectColores.innerHTML = selectColores.innerHTML + "<option value='"+colores[i][0]+"'>"+colores[i][1]+"</option>";
-            }
-          }
-      });
-      solicitud.open("POST", url, true);
-      solicitud.send(datos);
-    }
-    window.addEventListener("load", iniciar)
+    // function iniciar() {
+    //   semanas = document.getElementsByTagName("tr");
+    //   for (var i = 0; i < semanas.length; i++) {
+    //     semanas[i].addEventListener("click",mostrar(i))
+    //   }
+    // }
+    // function mostrar(semana) {
+    // }
+    // window.addEventListener("load", iniciar)
   </script>
 {% endblock %}
