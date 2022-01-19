@@ -3,7 +3,7 @@ from BBDD.acceso import Acceso
 from BBDD.vendedores import Vendedores
 from BBDD.pedidos import Pedidos
 from Pronosticos.pronosticar import *
-from PMP.ejecutarPMP import *
+# from PMP.ejecutarPMP import *
 import json
 import pandas
 import calendar
@@ -53,10 +53,10 @@ def cro_produccion():
                              "fri", "sat table-active p-3", "sun table-active p-3"]
     cronograma = calendario.formatmonth(anio_actual, mes_actual)
 
-    plan = ejecutarPMP()
-    semanas = plan.calcular()
+    # plan = ejecutarPMP()
+    # semanas = plan.calcular()
 
-    return render_template("administrador/cronograma-produccion.html", cronograma=cronograma, semanas=semanas)
+    return render_template("administrador/cronograma-produccion.html", cronograma=cronograma)
 
 
 @app.route("/produccion-semana", methods=['POST', 'GET'])
